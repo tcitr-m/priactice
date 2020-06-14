@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    function InputEle(props) {
+      return (
+        <input type="text" value={props.value} onChange={props.onChange}/>
+      )
+    }
+    class App extends React.Component{
+      constructor(){
+        super(),
+        this.state = {
+          list: ['盗梦空间', '异乡人', '赛博朋克'],
+          title: '双向绑定',
+        }
+      }
+      change(event) {
+        debugger
+        state.title = event.traget.value
+      }
+      render() {
+        const listItem = this.state.list.map(name => 
+          <li key={name}>{name}</li>
+        );
+        return (
+          <div>
+            <ul>{listItem}</ul>
+            <InputEle value={this.state.title} onChange={this.change}/>
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(<App/>, document.querySelector('#app'))
+  </script>
+</body>
+</html>
