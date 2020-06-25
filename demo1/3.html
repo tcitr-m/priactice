@@ -55,17 +55,23 @@
       changeItem(id, counter) {
         const books = [...this.state.books] //保证数据不可变，复制数据
         this.setState({
-          books: books.map((item, index) =>{
+          books: books.map((item, indey) =>{
             if (id === item.id) {
               item.count += counter
             }
-            return item;
+            return item
           })
         })
       }
-      
-      render() {
-        const {books} = this.state;
+      // 移除
+      removeItem(id){
+        const books = [...this.state.books] // 拷贝数据
+        this.setState({
+          books: books.filter(item => item.id !== id)
+        })
+      }
+      renderBooks() {
+        const {books} = this.state
         return (
           <div>
             <table>
@@ -81,19 +87,24 @@
               </thead>
               <tbody>
                 {
-                  books.map((item, i) => {
-                    <tr key={item.id}>
-                      <td>{i + 1}</td>
-                      <td>{item.name}</td>
-                      <td>{item.date}</td>
-                      <td>{formatPrice(item.price)}</td>
-                      <td>
-                        <button disabled={item <= 1} onClick={e => this.changeItem(item.id, -1)}> - </button>
-                        <span className="conter">{item.count}</span>
-                        <button onClick={e => this.changeItem(item.id, 1)}> + </button>
-                      </td>
-                      <td><button>移除</button></td>
-                    </tr>
+                  books.map((item, i) => { 
+                    // map函数的回调如果有大括号，则必须用return
+                    return (
+                      <tr key={item.id}>
+                        <td>{i + 1}</td>
+                        <td>{item.name}</td>
+                        <td>{item.date}</td>
+                        <td>{formatPrice(item.price)}</td>
+                        <td>
+                          <button disabled={item.count <= 1} onClick={e => this.changeItem(item.id, -1)}> - </button>
+                          <span className="conter">{item.count}</span>
+                          <button onClick={e => this.changeItem(item.id, 1)}> + </button>
+                        </td>
+                        <td>
+                          <button onClick={e => this.removeItem(item.id)}>移除</button>
+                        </td>
+                      </tr>
+                    )
                   })
                 }
               </tbody>
@@ -101,6 +112,14 @@
             <h2>{this.getTotalPrice()}</h2>
           </div>
         )
+      }
+      renderEmpty() {
+        return <h2>购物车为空</h2>
+      }
+
+      render() {
+        const {books} = this.state;
+        return books.length ? this.renderBooks() : this.renderEmpty()
       }
     }
 
