@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,minimal-ui:ios">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>父子组件通信</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <!-- 自 React v15.5 起，React.PropTypes 已移入另一个包中。请使用 prop-types 库 代替 -->
+  <script src="../js/prop-types.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <script type="text/babel">
+
+    class ChildCpn extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {}
+      }
+      render() {
+        const {name, age, height} = this.props
+        return (
+          <div>
+            <h2>子组件</h2>
+            <p>{name + age + height}</p>
+          </div>
+        )
+      }
+    }
+
+    // 组件参数类型验证
+    ChildCpn.propTypes = {
+      name: PropTypes.string,
+      age: PropTypes.number,
+      height: PropTypes.number,
+    }
+
+    // 组件默认值
+    ChildCpn.defaultProps = {
+      name: 'tcitr',
+      age: 21,
+    }
+
+    class CounterButton extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {}
+      }
+      render() {
+        const {operator, btnClick} = this.props
+        return (
+          <button onClick={btnClick}>{operator}</button>
+        )
+      }
+    }
+
+    class App extends React.Component {
+      constructor() {
+        super()
+        this.state = {
+          msg: 'Hello Component',
+          count: 0
+        }
+      }
+      changeCounter(count) {
+        this.setState({
+          count: this.state.count + count
+        })
+      }
+      render() {
+        return (
+          <div>
+            <h2>{this.state.msg}</h2>
+            <ChildCpn name="rye"  height={172}/>
+            <hr/>
+            <div>
+              <h2>{this.state.count}</h2>
+              <CounterButton operator="+" btnClick={e => this.changeCounter(1)}/> 
+              <CounterButton operator="-" btnClick={e => this.changeCounter(-1)}/> 
+            </div>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<App />, document.querySelector('#root'))
+  </script>
+</body>
+</html>
