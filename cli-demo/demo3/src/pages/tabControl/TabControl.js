@@ -24,7 +24,7 @@ export default class TabControl extends Component {
         {
           titles.map((item, index) => {
             return (
-              <div className="tab-item" onClick={e => this.itemClick(index)} key={index}>
+              <div className="tab-item" onClick={() => this.itemClick(index)} key={index}>
                 <span className={`title ` + (index === currentIndex ? 'active' : '')}>{item}</span>
               </div>
             )
