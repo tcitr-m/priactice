@@ -33,6 +33,7 @@
     "no-debugger": "off",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
+    "react/jsx-pascal-case": "off",
     // "react/jsx-space-before-closing": "error", // 组件 结尾有空格
     "react/jsx-wrap-multilines": {
       "declaration": "parens-new-line",
@@ -47,7 +48,8 @@
     "no-extra-semi": "error",
     "brace-style": "error",
     "prefer-destructuring": "error",
-    "no-undef": "off"
+    "no-undef": "off",
+    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }]
   },
   "plugins": [
     "react"
